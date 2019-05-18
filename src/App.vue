@@ -1,23 +1,24 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
     <router-view/>
+    <!-- 导航组件 -->
+    <FooterGuide v-show="$route.meta.showFooter"/>
   </div>
 </template>
 
 <script>
+// 引入导航组件
+import FooterGuide from "./components/FooterGuide/FooterGuide.vue"
 export default {
-  name: 'App'
-}
+  components: {
+    FooterGuide
+  }
+};
 </script>
 
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+<style lang="stylus" rel="stylesheet/stylus">
+  .app
+    width 100%
+    height 100%
+    background #f5f5f5
 </style>
