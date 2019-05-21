@@ -138,6 +138,7 @@ export default {
   components: {
     AlertTip
   }
+  
 };
 </script>
 
