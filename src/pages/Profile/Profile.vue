@@ -2,17 +2,17 @@
   <section class="profile">
     <HeaderTop title="我的"/>
     <section class="profile-number">
-      <router-link to="/login" class="profile-link">
+      <router-link :to="userInfo._id ? '/userinfo':'/login'" class="profile-link">
         <div class="profile_image">
           <i class="iconfont icon-geren1"></i>
         </div>
         <div class="user-info">
-          <p class="user-info-top">登录/注册</p>
+          <p class="user-info-top" v-if="!userInfo.phone">{{userInfo.name || '登录/注册'}}</p>
           <p>
             <span class="user-icon">
               <i class="iconfont icon-shouji icon-mobile"></i>
             </span>
-            <span class="icon-mobile-number">暂无绑定手机号</span>
+            <span class="icon-mobile-number">{{userInfo.phone || '暂无绑定手机号'}}</span>
           </p>
         </div>
         <span class="arrow">
@@ -94,13 +94,46 @@
         </div>
       </a>
     </section>
+    <!-- 退出登录按钮 -->
+    <section class="profile_my_order border-1px">
+      <mt-button type="danger" size="large" v-if="userInfo._id" @click="logout">退出登录</mt-button>
+    </section>
   </section>
 </template>
 
 <script>
-import HeaderTop from "../../components/HeaderTop/HeaderTop.vue"
+import { mapState } from "vuex";
+import { MessageBox,Toast } from "mint-ui";
+import HeaderTop from "../../components/HeaderTop/HeaderTop.vue";
 export default {
-  components:{
+  computed: {
+    ...mapState(["userInfo"])
+  },
+  methods: {
+    logout() {
+      MessageBox.confirm("您确定退出登录吗？").then(
+        action => {
+          // 点击了确定，请求退出
+          this.$store.dispatch('logout')
+
+          // 退出登录的提示信息框
+          Toast({
+            message:'退出成功',
+            position: 'middle',
+            duration: 1000
+          })
+        },
+        action =>{
+          Toast({
+            message:'已取消',
+            position: 'middle',
+            duration: 1000
+          })
+        }
+      );
+    }
+  },
+  components: {
     HeaderTop
   }
 };
@@ -111,7 +144,8 @@ export default {
 
 .profile { // 我的
   width: 100%;
-  overflow hidden
+  overflow: hidden;
+
   .profile-number {
     margin-top: 45.5px;
 
@@ -300,7 +334,7 @@ export default {
           width: 10px;
           height: 10px;
 
-          .icon-right  {
+          .icon-right {
             color: #bbb;
             font-size: 10px;
           }
@@ -309,6 +343,4 @@ export default {
     }
   }
 }
-
-
 </style>
