@@ -107,7 +107,7 @@ export default {
   },
   components: {
     HeaderTop,
-    ShopList
+    ShopList,
   }
 };
 </script>
