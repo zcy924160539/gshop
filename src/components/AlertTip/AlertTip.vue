@@ -1,3 +1,4 @@
+<!-- 登录失败提示框组件 -->
 <template>
   <div class="alert_container">
     <section class="tip_text_container">
