@@ -8,6 +8,8 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 
+import './mock/mockServer.js' // 加载mockServer
+
 // 注册全局组件标签
 Vue.component(Button.name, Button) // <mt-button>
 // eslint-disable-next-line no-new
