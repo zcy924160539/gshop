@@ -1,48 +1,76 @@
 <template>
   <div class="cartcontrol">
-    <div class="iconfont icon-remove" v-if="food.count"></div>
-    <div class="cart-count">{{food.count}}</div>
-    <div class="iconfont icon-jia"></div>
+    <transition name="move">
+      <!-- click.stop阻止事件冒泡 -->
+      <div class="iconfont icon-remove" v-if="food.count" @click.stop="updateFoodCount(false)"></div>
+    </transition>
+    <div class="cart-count" v-if="food.count">{{food.count}}</div>
+    <!-- click.stop阻止事件冒泡 -->
+    <div class="iconfont icon-jia" @click.stop="updateFoodCount(true)"></div>
   </div>
 </template>
 
 <script>
 export default {
-  props:{
-    food:Object
+  props: {
+    food: Object
+  },
+  methods: {
+    updateFoodCount(isAdd) {
+      this.$store.dispatch("updateFoodCount", { isAdd, food: this.food });
+    }
   }
 };
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
-  @import "../../common/stylus/mixins.styl"
-  .cartcontrol
-    font-size: 0
-    .cart-decrease
-      display: inline-block
-      padding: 6px
-      line-height: 24px
-      font-size: 24px
-      color: rgb(0, 160, 220)
-    .icon-remove
-      display: inline-block
-      padding 6px
-      line-height 24px
-      font-size 24px
-      color $green
-    .cart-count
-      display: inline-block
-      vertical-align: top
-      width: 12px
-      padding-top: 6px
-      line-height: 24px
-      text-align: center
-      font-size: 10px
-      color: rgb(147, 153, 159)
-    .icon-jia
-      display: inline-block
-      padding: 6px
-      line-height: 24px
-      font-size: 24px
-      color $green
+@import '../../common/stylus/mixins.styl';
+
+.cartcontrol {
+  font-size: 0;
+
+  .cart-decrease {
+    display: inline-block;
+    padding: 6px;
+    line-height: 24px;
+    font-size: 24px;
+    color: rgb(0, 160, 220);
+  }
+
+  .icon-remove {
+    display: inline-block;
+    padding: 6px;
+    line-height: 24px;
+    font-size: 24px;
+    color: $green;
+
+    &.move-enter-active, &.move-leave-active {
+      transition: all 0.3s;
+    }
+
+    &.move-enter, &.move-leave-to {
+      opacity: 0;
+      transform: translateX(15px) rotate(180deg);
+    }
+  }
+
+  .cart-count {
+    display: inline-block;
+    vertical-align: top;
+    width: 12px;
+    padding-top: 6px;
+    line-height: 24px;
+    text-align: center;
+    font-size: 10px;
+    color: rgb(147, 153, 159);
+  }
+
+  .icon-jia {
+    display: inline-block;
+    padding: 6px;
+    line-height: 24px;
+    font-size: 24px;
+    color: $green;
+  }
+}
 </style>

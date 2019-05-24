@@ -27,6 +27,7 @@
                 class="food-item bottom-border-1px"
                 v-for="(food,index) in good.foods"
                 :key="index"
+                @click="showFood(food)"
               >
                 <div class="icon">
                   <img width="57" height="57" :src="food.icon">
@@ -50,8 +51,13 @@
             </ul>
           </li>
         </ul>
+      
+      
+      
       </div>
+      <ShopCart/>
     </div>
+    <Food :food="food" ref="food"/>
   </div>
 </template>
 
@@ -62,11 +68,15 @@ import CartControl from '../../../components/CartControl/CartControl.vue'
 // 列表显示之后再创建BScroll实例对象
 
 import { mapState } from "vuex";
+
+import Food from '../../../components/Food/Food.vue'
+import ShopCart from '../../../components/ShopCart/ShopCart.vue'
 export default {
   data() {
     return {
       scrollY: 0, // 右侧列表滑动的Y轴坐标(滑动过程实时变化,需要在变化时收集该数据)
-      tops: [] // 所有右侧分类li的top组成的数组,需要在第一次显示后收集tops
+      tops: [], // 所有右侧分类li的top组成的数组,需要在第一次显示后收集tops
+      food:{} // 需要显示的food
     };
   },
   mounted() {
@@ -143,10 +153,19 @@ export default {
       this.scrollY = scrollY;
       this.foodScroll.scrollTo(0, -scrollY, 300);
       // console.log(y)
+    },
+    // 显示点击的food
+    showFood(food){
+      // 设置food
+      this.food = food
+      // 显示Food组件(父组件调用子组件对象的方法（toggleShow）)
+      this.$refs.food.toggleShow()
     }
   },
   components:{
-    CartControl
+    CartControl,
+    Food,
+    ShopCart
   }
 };
 </script>
