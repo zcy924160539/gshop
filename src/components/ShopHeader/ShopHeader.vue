@@ -76,7 +76,7 @@
             <span class="iconfont icon-guanbi"></span>
           </div>
         </div>
-        <div class="brief-modal-cover"></div>
+        <div class="brief-modal-cover" @click="toggleShopShow"></div>
       </div>
     </transition> 
     <transition name="fade"> 
@@ -100,7 +100,7 @@
             <span class="iconfont icon-guanbi"></span>
           </div>
         </div>
-        <div class="activity-sheet-cover"></div>
+        <div class="activity-sheet-cover" @click="toggleSupportShow"></div>
       </div>
     </transition>
   </div>

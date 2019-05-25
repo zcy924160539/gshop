@@ -51,9 +51,6 @@
             </ul>
           </li>
         </ul>
-      
-      
-      
       </div>
       <ShopCart/>
     </div>
